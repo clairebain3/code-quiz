@@ -1,5 +1,7 @@
 // var theElement = document.querySelector([CSS Selector for your element]);
 var timerEl = document.getElementById('countdown');
+var headerEl = document.getElementById('header');
+var subheaderEl = document.getElementById('subheader');
 
 var codingQuestions = ['Question 1', 'Question 2', 'Question 3', 'Question 4', 'Question 5']
 // how to store the codingAnswers? Is an array best?
@@ -7,6 +9,13 @@ var codingQuestions = ['Question 1', 'Question 2', 'Question 3', 'Question 4', '
 var timeLeft
 var userScore
 var userIntials
+
+function gameOver(){
+    headerEl.textContent = 'All Done'
+    subheaderEl.textContent = 'You final score is ' + userScore
+
+}
+
 
 // Timer that counts down from 5
 function countdown() {
@@ -30,9 +39,15 @@ function countdown() {
         // Use `clearInterval()` to stop the timer
         clearInterval(timeInterval);
         // Call the `displayMessage()` function
-       // do something
+       gameOver();
       }
     }, 1000);
+  }
+
+  function dispayQuestions(){
+    var x = 0
+    headerEl.textContent = codingQuestions[x]
+
   }
 
   countdown()
