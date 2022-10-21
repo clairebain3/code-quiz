@@ -9,7 +9,16 @@
     
     
 }
-    
+.container {
+    display: block;
+    margin: 60px auto;
+    text-align: center;
+    font-size: 30px;
+    width: 80vw;
+    background-color: #f0ead6;
+    padding-top: 20px;
+  }
+
 header {
 
     text-align: center;
@@ -26,4 +35,17 @@ header {
     margin-top: 100px;
     display: flex;
     justify-content: center;
+   
 }
+
+#answerScore {
+    display: block;
+    border-top: gray;
+    border-style: groove;
+    width: 100px;
+    text-align: center;
+    height: 100px;
+
+}
+
+
