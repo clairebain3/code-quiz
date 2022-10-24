@@ -19,6 +19,12 @@
     padding-top: 20px;
   }
 
+.answerBtn{
+
+    color: blueviolet;
+    font-size: 40px;
+}
+
 header {
 
     text-align: center;
@@ -47,5 +53,8 @@ header {
     height: 100px;
 
 }
+#listAnswers{
 
+list-style-type: none;
+}
 
