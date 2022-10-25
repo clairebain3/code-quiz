@@ -4,28 +4,38 @@ var headerEl = document.getElementById('header');
 var subheaderEl = document.getElementById('subheader');
 var listEl = document.getElementById('listAnswers');
 var answers = document.getElementById('answers');
+var answerScore = document.getElementById('answerScore');
+var userForm = document.getElementById('userForm');
 var li1 = document.createElement("li");
 var li2 = document.createElement("li");
 var li3 = document.createElement("li");
 var li4 = document.createElement("li");
 var startQuiz = document.getElementById('startQuiz');
+var ListEls = document.querySelectorAll("li");
 
 var codingQuestions = new Array ();
 codingQuestions[0] = new Array ('Arrays in javascript start at ____?', '0', '1', '2', '3');
-codingQuestions[1] = new Array ('question 2', 'Answer 12', 'Answer 2', 'Answer 3', 'Answer 4');
-codingQuestions[2] = new Array ('Question 3', 'Answer 1', 'Answer 2', 'Answer 3', 'Answer 4');
-codingQuestions[3] = new Array ('Question 4', 'Answer 1', 'Answer 2', 'Answer 3', 'Answer 4');
-codingQuestions[4] = new Array ('Question 5', 'Answer 1', 'Answer 2', 'Answer 3', 'Answer 4');
+codingQuestions[1] = new Array ('___ is a commonly-used data type', 'The dom', 'For loops', 'String', 'HTML');
+codingQuestions[2] = new Array ('Which of the below is NOT a commonly-used web programming language?', 'HTML', 'CSS', 'JavaScript', 'Console Log');
+codingQuestions[3] = new Array ('What percentage of websites use JQuery?', '10%', '100%', '90%', '50%');
+codingQuestions[4] = new Array ('Which of the below could be contained in a boolean type variable?', '900', 'true', 'Giraffes', '67.3');
+
+var answerKey = ['0','String','Console Log','90%','true']
 
 
 let timeLeft = 60;
-var userScore
-var userIntials
-var questionCount = 0
+let userScore = 0;
+let highScore = '';
+var userIntials = '';
+var questionCount = 0;
+answerCount = 0;
+userForm.setAttribute("style", "display:none;");
 
 function gameOver(){
     headerEl.textContent = 'All Done'
     subheaderEl.textContent = 'Your final score is ' + userScore
+    answerScore.setAttribute("style", "display:none;");
+    userForm.setAttribute("style", "display:inline;");
 
 }
 headerEl.textContent = 'Coding Quiz'
@@ -68,15 +78,18 @@ function countdown() {
     listEl.textContent = codingQuestions[0][0];
     // display the first question and answer set
 
-    li1.textContent = "1: " + codingQuestions[0][1];
-    li2.textContent = "2: " + codingQuestions[0][2];
-    li3.textContent = "3: " + codingQuestions[0][3];
-    li4.textContent = "4: " + codingQuestions[0][4];
-    li1.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
-    li2.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
-    li3.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
-    li4.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
-    // li2.setAttribute("style", "display:inline;");
+    li1.textContent =   codingQuestions[0][1];
+    li2.textContent =   codingQuestions[0][2];
+    li3.textContent =  codingQuestions[0][3];
+    li4.textContent =  codingQuestions[0][4];
+    // li1.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
+    // li2.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
+    // li3.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
+    // li4.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
+    li1.setAttribute("class", "answerBtn");
+    li2.setAttribute("class", "answerBtn");
+    li3.setAttribute("class", "answerBtn");
+    li4.setAttribute("class", "answerBtn");
     // li3.setAttribute("style", "display:inline;");
     // li4.setAttribute("style", "display:inline;");
     listEl.appendChild(li1);
@@ -91,10 +104,10 @@ function countdown() {
     if(questionCount < 4){
     questionCount = questionCount + 1
     listEl.textContent = codingQuestions[questionCount][0];
-    li1.textContent = "1: " + codingQuestions[questionCount][1];
-    li2.textContent = "2: " + codingQuestions[questionCount][2];
-    li3.textContent = "3: " + codingQuestions[questionCount][3];
-    li4.textContent = "4: " + codingQuestions[questionCount][4];
+    li1.textContent =  codingQuestions[questionCount][1];
+    li2.textContent =  codingQuestions[questionCount][2];
+    li3.textContent =  codingQuestions[questionCount][3];
+    li4.textContent =  codingQuestions[questionCount][4];
     listEl.appendChild(li1);
     listEl.appendChild(li2);
     listEl.appendChild(li3);
@@ -115,13 +128,52 @@ function countdown() {
     }
   }
 
+  // function checkAnswer(element){
+  //   var state = element.textContent;
+  //   console.log(answerKey[answerCount] + userScore + answerCount + state);
+  //     if (state === answerKey[answerCount]){
+  //       userScore = userScore + 5;
+  //       answerScore.textContent = 'Right'
+  //       // screen reads right
+  //     }
+  //     else{
+  //       timeLeft -=5;
+  //       answerScore.textContent = 'Wrong'
+  //     }
+  //     answerCount +=1
+
+  // }
+
   listAnswers.addEventListener("click", function (event) {
+    var element = event.target;
+
+    if (element.matches(".answerBtn")) {
+
+     
+
+      var state = element.textContent;
+      console.log(answerKey[answerCount] + state);
+        if (state === answerKey[answerCount]){
+          userScore += 5;
+          answerScore.textContent = 'Right'
+          // screen reads right
+        }
+        else{
+          timeLeft -=5;
+          answerScore.textContent = 'Wrong'
+        }
+        answerCount +=1
+
     nextQuestion();
+    }
   
-    // // get letter from clicked letter button's `data-letter` attribute and use it for display
-    // displayLetterEl.text($(event.target).attr("data-letter"));
-    // displayEl.append(displayLetterEl);
   });
+
+  userForm.addEventListener("click", function(event){
+    event.preventDefault();
+    userIntials = document.getElementById('initials').value;
+    console.log(userIntials)
+  })
 
 //   function navigate(direction) {
 //     index = index + direction;

@@ -21,8 +21,11 @@
 
 .answerBtn{
 
-    color: blueviolet;
+    color: white;
     font-size: 40px;
+    background-color: purple;
+    padding: 5px;
+    margin: 10px;
 }
 
 header {
@@ -45,12 +48,14 @@ header {
 }
 
 #answerScore {
-    display: block;
-    border-top: gray;
-    border-style: groove;
-    width: 100px;
+    /* display: flex;
+    /* border-top: gray; */
+    border-top: groove;
+    /* width: 100px;
     text-align: center;
-    height: 100px;
+    height: 100px; */ 
+    justify-content: center;
+    font-style: italic;
 
 }
 #listAnswers{
