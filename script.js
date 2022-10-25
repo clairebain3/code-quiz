@@ -1,29 +1,31 @@
-// var theElement = document.querySelector([CSS Selector for your element]);
 
 
+// declare variables
 var timerEl = document.getElementById('countdown');
 var headerEl = document.getElementById('header');
 var subheaderEl = document.getElementById('subheader');
 var listEl = document.getElementById('listAnswers');
 var answers = document.getElementById('answers');
 var answerScore = document.getElementById('answerScore');
+var viewHighScore = document.getElementById('viewHighScore');
+// var clearBtn = document.getElementById('clearBtn');
 var formBtn = document.getElementById('formBtn');
 var li1 = document.createElement("li");
 var li2 = document.createElement("li");
 var li3 = document.createElement("li");
 var li4 = document.createElement("li");
 var startQuiz = document.getElementById('startQuiz');
-// var ListEls = document.querySelectorAll("li");
 var highScoresEl = document.createElement("ul");
 
 
+// load questions and answers into array
 var codingQuestions = new Array ();
 codingQuestions[0] = new Array ('Arrays in javascript start at ____?', '0', '1', '2', '3');
 codingQuestions[1] = new Array ('___ is a commonly-used data type', 'The dom', 'For loops', 'String', 'HTML');
 codingQuestions[2] = new Array ('Which of the below is NOT a commonly-used web programming language?', 'HTML', 'CSS', 'JavaScript', 'Console Log');
 codingQuestions[3] = new Array ('What percentage of websites use JQuery?', '10%', '100%', '90%', '50%');
 codingQuestions[4] = new Array ('Which of the below could be contained in a boolean type variable?', '900', 'true', 'Giraffes', '67.3');
-
+// declare answer key
 var answerKey = ['0','String','Console Log','90%','true']
 
 
@@ -35,7 +37,12 @@ var questionCount = 0;
 let arrHighScores = [];
 answerCount = 0;
 userForm.setAttribute("style", "display:none;");
+// clearBtn.setAttribute("style", "display:none;");
+headerEl.textContent = 'Coding Quiz'
+subheaderEl.textContent = 'Click the button to start the quiz. Answering incorrectly will subtract 5 seconds from the timer'
 
+
+// function to clear screen when game finishes
 function gameOver(){
     headerEl.textContent = 'All Done'
     subheaderEl.textContent = 'Your final score is ' + userScore
@@ -43,12 +50,8 @@ function gameOver(){
     userForm.setAttribute("style", "display:inline;");
 
 }
-headerEl.textContent = 'Coding Quiz'
-subheaderEl.textContent = 'Click the button to start the quiz. Answering incorrectly will subtract 5 seconds from the timer'
-// li1.setAttribute("style", "display:none;");
-// li2.setAttribute("style", "display:none;");
-// li3.setAttribute("style", "display:none;");
-// li4.setAttribute("style", "display:none;");
+
+
 // Timer that counts down from 60
 
 function countdown() {
@@ -87,24 +90,18 @@ function countdown() {
     li2.textContent =   codingQuestions[0][2];
     li3.textContent =  codingQuestions[0][3];
     li4.textContent =  codingQuestions[0][4];
-    // li1.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
-    // li2.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
-    // li3.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
-    // li4.setAttribute("style", " color:white; background: purple; padding: 5px; margin: 10px;");
     li1.setAttribute("class", "answerBtn");
     li2.setAttribute("class", "answerBtn");
     li3.setAttribute("class", "answerBtn");
     li4.setAttribute("class", "answerBtn");
-    // li3.setAttribute("style", "display:inline;");
-    // li4.setAttribute("style", "display:inline;");
     listEl.appendChild(li1);
     listEl.appendChild(li2);
     listEl.appendChild(li3);
     listEl.appendChild(li4);
-    // listEl.children.setAttribute("class", "answerBtn"); // this probably needs a loop
 
   }
 
+  // function to display the next question ans answer set
   function nextQuestion(){
     if(questionCount < 4){
     questionCount = questionCount + 1
@@ -133,29 +130,11 @@ function countdown() {
     }
   }
 
-  // function checkAnswer(element){
-  //   var state = element.textContent;
-  //   console.log(answerKey[answerCount] + userScore + answerCount + state);
-  //     if (state === answerKey[answerCount]){
-  //       userScore = userScore + 5;
-  //       answerScore.textContent = 'Right'
-  //       // screen reads right
-  //     }
-  //     else{
-  //       timeLeft -=5;
-  //       answerScore.textContent = 'Wrong'
-  //     }
-  //     answerCount +=1
-
-  // }
-
+// function that runs when user clicks on an answer button. Checks if it's right, then calls next question function
   listAnswers.addEventListener("click", function (event) {
     var element = event.target;
 
     if (element.matches(".answerBtn")) {
-
-     
-
       var state = element.textContent;
       console.log(answerKey[answerCount] + state);
         if (state === answerKey[answerCount]){
@@ -214,9 +193,11 @@ function countdown() {
     }
     // store any high scores in local storage
     storeHighScores();
+    // clearBtn.setAttribute("style", "display:inline;");
   
   })
 
+  // function to view high scores page
   function viewHighScores(){
     init();
     subheaderEl.textContent = '';
@@ -230,16 +211,30 @@ function countdown() {
       li.textContent = highscore;
 
       highScoresEl.appendChild(li);
+      
+      clearButton.setAttribute("class", "answerBtn");
+      listEl.appendChild(clearButton);
     }
 
   }
 
 
-// homeBtn.addEventListener("click", function(event){
-// event.preventDefault();
+viewHighScore.addEventListener("click", function(event){
+viewHighScores();
 
+})
+
+// clearButton.addEventListener("click", function(event){
+// clearHighScores()
 
 // })
+
+function clearHighScores(){
+  localStorage.clear();
+  highScoresEl.remove();
+
+
+}
 
 
 
