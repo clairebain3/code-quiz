@@ -1,4 +1,6 @@
 // var theElement = document.querySelector([CSS Selector for your element]);
+
+
 var timerEl = document.getElementById('countdown');
 var headerEl = document.getElementById('header');
 var subheaderEl = document.getElementById('subheader');
@@ -30,6 +32,7 @@ let userScore = 0;
 let highScore = '';
 let userIntials = '';
 var questionCount = 0;
+let arrHighScores = [];
 answerCount = 0;
 userForm.setAttribute("style", "display:none;");
 
@@ -171,34 +174,87 @@ function countdown() {
   
   });
 
+  function storeHighScores() {
+    // Stringify and set key in localStorage to arrHighScores array
+    localStorage.setItem("scores", JSON.stringify(arrHighScores));
+  }
+
+  function init() {
+    // Get stored highscores from localStorage
+    var storedHighScores = JSON.parse(localStorage.getItem("scores"));
+  
+    // If todos were retrieved from localStorage, update the todos array to it
+    if (storedHighScores !== null) {
+      arrHighScores = storedHighScores;
+    }
+  
+  }
+
+
+// function that runs when user submits high score
   formBtn.addEventListener("click", function(event){
+    // get any high scores from local storage
+    init();
     event.preventDefault();
     userIntials = document.getElementById('initials').value;
-    console.log(userIntials)
     subheaderEl.textContent = '';
     subheaderEl.appendChild(highScoresEl);
-    var li = document.createElement("li");
-    li.textContent = userIntials + ": " + userScore;
-    highScoresEl.appendChild(li);
     userForm.setAttribute("style", "display:none;");
     headerEl.textContent = 'High Scores'
+    arrHighScores.push(userIntials + ": " + userScore);
+  
+
+    for (var i = 0; i < arrHighScores.length; i++) {
+      var highscore = arrHighScores[i];
+  
+      var li = document.createElement("li");
+      li.textContent = highscore;
+
+      highScoresEl.appendChild(li);
+    }
+    // store any high scores in local storage
+    storeHighScores();
+  
+  })
+
+  function viewHighScores(){
+    init();
+    subheaderEl.textContent = '';
+    subheaderEl.appendChild(highScoresEl);
+    userForm.setAttribute("style", "display:none;");
+    headerEl.textContent = 'High Scores'
+    for (var i = 0; i < arrHighScores.length; i++) {
+      var highscore = arrHighScores[i];
+  
+      var li = document.createElement("li");
+      li.textContent = highscore;
+
+      highScoresEl.appendChild(li);
+    }
+
+  }
+
+
+// homeBtn.addEventListener("click", function(event){
+// event.preventDefault();
+
+
+// })
+
+
+
+    // var li = document.createElement("li");
+    // li.textContent = userIntials + ": " + userScore;
+    // highScoresEl.appendChild(li);
+
     // var goBack = document.createElement("button")
     // subheaderEl.appendChild(goback);
     
     // headerEl.textContent = '';
 
-  })
+  
 
-//   function navigate(direction) {
-//     index = index + direction;
-//     if (index < 0) { 
-//       index = images.length - 1; 
-//     } else if (index > images.length - 1) { 
-//       index = 0;
-//     }
-//     currentImage = images[index];
-//     carousel.style.backgroundImage = "url('" + currentImage + "')";
-//   }
+  
 
 
   startQuiz.addEventListener("click", function(event) {
