@@ -5,13 +5,15 @@ var subheaderEl = document.getElementById('subheader');
 var listEl = document.getElementById('listAnswers');
 var answers = document.getElementById('answers');
 var answerScore = document.getElementById('answerScore');
-var userForm = document.getElementById('userForm');
+var formBtn = document.getElementById('formBtn');
 var li1 = document.createElement("li");
 var li2 = document.createElement("li");
 var li3 = document.createElement("li");
 var li4 = document.createElement("li");
 var startQuiz = document.getElementById('startQuiz');
-var ListEls = document.querySelectorAll("li");
+// var ListEls = document.querySelectorAll("li");
+var highScoresEl = document.createElement("ul");
+
 
 var codingQuestions = new Array ();
 codingQuestions[0] = new Array ('Arrays in javascript start at ____?', '0', '1', '2', '3');
@@ -26,7 +28,7 @@ var answerKey = ['0','String','Console Log','90%','true']
 let timeLeft = 60;
 let userScore = 0;
 let highScore = '';
-var userIntials = '';
+let userIntials = '';
 var questionCount = 0;
 answerCount = 0;
 userForm.setAttribute("style", "display:none;");
@@ -169,10 +171,22 @@ function countdown() {
   
   });
 
-  userForm.addEventListener("click", function(event){
+  formBtn.addEventListener("click", function(event){
     event.preventDefault();
     userIntials = document.getElementById('initials').value;
     console.log(userIntials)
+    subheaderEl.textContent = '';
+    subheaderEl.appendChild(highScoresEl);
+    var li = document.createElement("li");
+    li.textContent = userIntials + ": " + userScore;
+    highScoresEl.appendChild(li);
+    userForm.setAttribute("style", "display:none;");
+    headerEl.textContent = 'High Scores'
+    // var goBack = document.createElement("button")
+    // subheaderEl.appendChild(goback);
+    
+    // headerEl.textContent = '';
+
   })
 
 //   function navigate(direction) {
